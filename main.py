@@ -13,7 +13,7 @@ from utils import send_message, logger
 
 app = FastAPI()
 # Set up the OpenAI API client
-client = OpenAI(api_key="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")
+client = OpenAI(api_key=config("OPENAI_API_KEY"))
 
 # Dependency
 def get_db():
@@ -37,7 +37,7 @@ async def reply(request: Request, Body: str = Form(), db: Session = Depends(get_
 
     # Call the OpenAI API to generate text with ChatGPT
     messages = [{"role": "user", "content": Body}]
-    messages.append({"role": "system", "content": "You're an investor, a serial founder and you've sold many startups. You understand nothing but business."})
+    messages.append({"role": "system", "content": "You're a kind and helpful assistant."})
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=messages,
